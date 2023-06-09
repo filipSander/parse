@@ -10,5 +10,5 @@ except Exception as ex:
     print(ex)
     
 finally:
-    driver.close();
-    driver.quit();
+    driver.close()
+    driver.quit()
