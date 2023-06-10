@@ -1,5 +1,7 @@
 # my
-profile
+!/profile
+/profile/*
+!profile/Default/
 
 # Editor directories and files
 .vscode/*
