@@ -4,7 +4,7 @@ from parser.driver import driver
 from product import Product
 
 try:
-    print(get_alldataSheet("AVS1ACP08"))
+    get_alldataSheet("AVS1ACP08")
 
 except Exception as ex:
     print(ex)

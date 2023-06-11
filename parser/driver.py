@@ -8,7 +8,7 @@ options.binary_location = r"C:\Users\csw\AppData\Local\CentBrowser\Application\c
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 options.add_argument('--disable-blink-features=AutomationControlled')
 # options.add_argument(f"user-agent={UserAgent().random}") 
-options.add_argument(f"user-data-dir={getcwd()}//profile")
+options.add_argument(f"user-data-dir={getcwd()}//parser//profile")
 
 driver = webdriver.Chrome(
     service = Service(getcwd() + r"\parser\chromedriver.exe"),
