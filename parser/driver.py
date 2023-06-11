@@ -4,7 +4,7 @@ from selenium.webdriver.chrome.service import Service
 from fake_useragent import UserAgent
 
 options = webdriver.ChromeOptions()
-# options.binary_location = r"C:\Users\csw\AppData\Local\CentBrowser\Application\chrome.exe"
+options.binary_location = r"C:\Users\csw\AppData\Local\CentBrowser\Application\chrome.exe"
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 options.add_argument('--disable-blink-features=AutomationControlled')
 # options.add_argument(f"user-agent={UserAgent().random}") 
