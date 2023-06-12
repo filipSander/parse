@@ -1,10 +1,12 @@
 from selenium.webdriver.common.by import By
-from .driver import driver
+from selenium import webdriver
 
+ 
 
-def get_alldataSheet(name):
+def get_alldataSheet(name, driver: webdriver.Chrome):
+
     url = "https://www.alldatasheet.com/view.jsp?Searchword="
-    condition = f'//div/table/tbody/tr/td/table/tbody/tr/td/a'
+    condition = '//div/table/tbody/tr/td/table/tbody/tr/td/a'
     
     driver.get(url=url + name)
     rows = driver.find_elements(By.XPATH, condition)

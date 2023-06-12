@@ -1,14 +1,18 @@
 from time import sleep
 from parser.step_two import get_alldataSheet
-from parser.driver import driver
+from parser.step_one import checkProduct
+from parser.driver import Driver
 from product import Product
 
+
 try:
-    get_alldataSheet("AVS1ACP08")
+    browser = Driver()
+    checkProduct(browser.getDriver())
+    
 
 except Exception as ex:
     print(ex)
-    
+
 finally:
-    driver.close()
-    driver.quit()
+    browser.closeDriver()
+    
