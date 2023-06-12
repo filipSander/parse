@@ -1,5 +1,6 @@
 
 
+
 class Product:
     group: str
     type: str

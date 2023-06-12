@@ -15,6 +15,7 @@ class Driver:
 
 
     def openDriver(self):
+        print("Открытие драйвера")
         self.options.add_experimental_option("excludeSwitches", ["enable-logging"])
         self.options.add_argument('--disable-blink-features=AutomationControlled')
         self.options.add_argument(f"user-data-dir={getcwd()}//parser//profile")

@@ -5,6 +5,7 @@ from parser.driver import Driver
 from product import Product
 
 
+
 try:
     browser = Driver()
     checkProduct(browser.getDriver())
