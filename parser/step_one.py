@@ -1,8 +1,51 @@
 from time import sleep
 from selenium.webdriver.common.by import By
 from selenium import webdriver
+
+from product import Product
 from .productlinq import Productlinq
 
+
+
+def getCatalogPagesCount(pages):
+    lastLinq = pages[-1].get_attribute("href").split("/")
+    lastNum = lastLinq[-1].split(".")
+    return int(lastNum[0])
+
+
+
+def getCatalog(driver: webdriver.Chrome, catalog: Productlinq):
+    
+    driver.get(url=catalog.linq)
+    
+    condition = '//div[contains(@class, "pages")]/span/a'
+    count = getCatalogPagesCount(pages=driver.find_elements(By.XPATH, condition))
+    
+    condition = '//table[contains(@class, "catdata")]/tbody/tr'
+    products : Product = []
+
+    for i in range(1,count + 1):
+        driver.get(url=catalog.linq + str(i) + ".htm?")
+        rows = driver.find_elements(By.XPATH, condition)
+
+        for r in range(1, len(rows)):
+            td = rows[r].find_elements(By.TAG_NAME,'td')
+            try:
+                products.append(
+                    Product(
+                        catalog.group,
+                        catalog.type,
+                        td[1].text,
+                        td[2].text,
+                        td[3].text,
+                        "anolog"
+                    )
+                )
+            except TypeError as ex:
+                print('Пустая строка')
+
+    return products
+        
 
 
 def checkProduct(driver: webdriver.Chrome):
@@ -21,15 +64,17 @@ def checkProduct(driver: webdriver.Chrome):
     condition = '/html/body/table[3]/tbody/tr/td/div/div/div/ul/li/a'
     types = driver.find_elements(By.XPATH, condition)
 
-    productTypes: Productlinq = []
+    catalog: Productlinq = []
     for t in types:
         for k,v in groupDict.items():
             if v in t.get_attribute("href"):
-                productTypes.append(Productlinq(k,t.text,t.get_attribute("href")))
+                catalog.append(Productlinq(k,t.text,t.get_attribute("href")))
 
-    # print(len(productTypes))
-    print(productTypes[0])
-    print(productTypes[len(productTypes) - 1])
+    # print(len(catalog))
+    return catalog
+
+
+
 
 
 # /html/body/table[3]/tbody/tr[2]/td[1]/div[1]/div/div/ul/li[54]

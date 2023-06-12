@@ -21,6 +21,8 @@ class Product:
         self.analogs = analogs
         Product.count += 1
 
+    def __str__(self) -> str:
+        return self.mark + " " + self.facturer
 
     def getAttr(self):
         return [self.group, self.type, self.mark, self.facturer, self.datasheet, self.analogs, self.alldataSheet]

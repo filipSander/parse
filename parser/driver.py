@@ -7,7 +7,7 @@ from fake_useragent import UserAgent
 
 class Driver:
     options = webdriver.ChromeOptions()
-    options.binary_location = r"C:\Users\csw\AppData\Local\CentBrowser\Application\chrome.exe"
+    # options.binary_location = r"C:\Users\csw\AppData\Local\CentBrowser\Application\chrome.exe"
     driver: webdriver.Chrome
     
     def __init__(self):
@@ -19,7 +19,7 @@ class Driver:
         self.options.add_experimental_option("excludeSwitches", ["enable-logging"])
         self.options.add_argument('--disable-blink-features=AutomationControlled')
         self.options.add_argument(f"user-data-dir={getcwd()}//parser//profile")
-        self.options.add_argument(f"user-agent={UserAgent().random}") 
+        # self.options.add_argument(f"user-agent={UserAgent().random}") 
         self.driver = webdriver.Chrome(
             service = Service(getcwd() + r"\parser\chromedriver.exe"),
             options = self.options
