@@ -19,7 +19,7 @@ def theadGetCatalog(group: str, catalogItems: Productlinq):
         count = 2
         for catalog in catalogItems:
             if catalog.group == group:
-                print("Парсинг каталога " + catalog.type)
+                print("Парсинг каталога " + catalog.type + "..")
                 products: Product = getCatalog(
                     driver=tread_browser.getDriver(),
                     catalog=catalog
@@ -39,6 +39,7 @@ def theadGetCatalog(group: str, catalogItems: Productlinq):
 def main():
     try: 
         browser = Driver()
+        print("Поиск групп и каталогов..")
         catalogItems: Productlinq  = checkCatalog(driver=browser.getDriver())
         browser.closeDriver()
         
@@ -48,9 +49,15 @@ def main():
                 group.append(c.group)
 
         print(group)
+        i = 0
         for g in group:
-            threading.Thread(target=theadGetCatalog,args=(g,catalogItems)).start()
-            sleep(30)
+            if i <= 8:
+                threading.Thread(target=theadGetCatalog,args=(g,catalogItems)).start()
+            else:
+                threading.Thread(target=theadGetCatalog,args=(g,catalogItems)).start().join()
+            print(f"Создан поток {i}")
+            sleep(15)
+            i+=1
 
     finally:
         pass

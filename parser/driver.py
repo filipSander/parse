@@ -1,6 +1,7 @@
 from os import getcwd
 import shutil
 import threading
+from time import sleep
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from fake_useragent import UserAgent
@@ -31,6 +32,7 @@ class Driver:
             service = Service(getcwd() + r"\parser\chromedriver.exe"),
             options = self.options
         )
+        sleep(5)
         self.driver.switch_to.new_window('tab')
         self.driver.switch_to.new_window('tab')
         self.driver.switch_to.window(self.driver.window_handles[0])
