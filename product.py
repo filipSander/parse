@@ -1,4 +1,6 @@
-
+import json
+from os import getcwd
+import openpyxl 
 
 
 class Product:
@@ -7,22 +9,26 @@ class Product:
     mark: str
     facturer: str
     datasheet: str 
-    analogs: str
+    analogs: str = []
     alldataSheet: str = ""
 
-    count = 0
+    count:int = 0
 
-    def __init__(self, group:str, type:str, mark:str, facturer:str, datasheet:str, analogs:str):
+    def __init__(self, group:str, type:str, mark:str, facturer:str, datasheet:str):
         self.group = group
         self.type = type
         self.mark = mark
         self.facturer = facturer
         self.datasheet = datasheet
-        self.analogs = analogs
         Product.count += 1
 
     def __str__(self) -> str:
         return self.mark + " " + self.facturer
 
     def getAttr(self):
-        return [self.group, self.type, self.mark, self.facturer, self.datasheet, self.analogs, self.alldataSheet]
+        analogsSTR = ''
+        for a in self.analogs:
+            analogsSTR += a + ' '
+        return[ self.group, self.type, self.mark,self.facturer, self.datasheet, analogsSTR, self.alldataSheet]
+        
+

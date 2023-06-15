@@ -7,7 +7,8 @@ from fake_useragent import UserAgent
 
 class Driver:
     options = webdriver.ChromeOptions()
-    # options.binary_location = r"C:\Users\csw\AppData\Local\CentBrowser\Application\chrome.exe"
+    options.binary_location = r"C:\Users\csw\AppData\Local\CentBrowser\Application\chrome.exe"
+    
     driver: webdriver.Chrome
     
     def __init__(self):
@@ -19,15 +20,21 @@ class Driver:
         self.options.add_experimental_option("excludeSwitches", ["enable-logging"])
         self.options.add_argument('--disable-blink-features=AutomationControlled')
         self.options.add_argument(f"user-data-dir={getcwd()}//parser//profile")
-        # self.options.add_argument(f"user-agent={UserAgent().random}") 
+        self.options.add_argument(f"user-agent={UserAgent().random}") 
+        # self.options.headless = True
         self.driver = webdriver.Chrome(
             service = Service(getcwd() + r"\parser\chromedriver.exe"),
             options = self.options
         )
+        self.driver.execute_script('''window.open("chrome://newtab/","_blank");''')
+        self.driver.execute_script('''window.open("chrome://newtab/","_blank");''')
+        self.driver.switch_to.window(self.driver.window_handles[0])
+        
 
     def changeUA(self):
         self.closeDriver()
         self.openDriver()
+        print(self.driver.execute_script("return navigator.userAgent"))
 
     def closeDriver(self):
         print("Закрытие драйвера")
@@ -36,9 +43,6 @@ class Driver:
 
     def getDriver(self):
         return self.driver
-    
-    def checkUA(self):
-        print(self.driver.execute_script("return navigator.userAgent"))
     
 
 
