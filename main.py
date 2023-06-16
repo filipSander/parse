@@ -3,7 +3,6 @@ import openpyxl
 from os import getcwd
 import threading
 
-
 from parser.productlinq import Productlinq
 from parser.func import checkCatalog, getCatalog
 from parser.driver import Driver
@@ -30,6 +29,7 @@ def theadGetCatalog(group: str, catalogItems: Productlinq):
                     count += 1
                 exel.save(docPath)
                 print(f"Записанно товаров - {count}")
+
     except Exception as ex:
         print("_________________________>>>> Ахтунг - " + ex)
 
@@ -40,7 +40,7 @@ def main():
     try: 
         browser = Driver()
         print("Поиск групп и каталогов..")
-        catalogItems: Productlinq  = checkCatalog(driver=browser.getDriver())
+        catalogItems: Productlinq = checkCatalog(driver=browser.getDriver())
     
     except Exception as ex:
         print("_________________________>>>> Ахтунг в точке входа - " + ex)
@@ -54,6 +54,7 @@ def main():
 
         i = 0
         threads = []
+        # запустить скрипт с 8й позиции <-
         for g in group:
             tr = threading.Thread(target=theadGetCatalog,args=(g,catalogItems))
             tr.start()
@@ -64,7 +65,7 @@ def main():
                 for t in threads:
                     t.join()
                 threads = []
-            i+=1
+            i += 1
             sleep(5)
 
 if __name__ == "__main__":
