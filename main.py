@@ -1,4 +1,4 @@
-from time import sleep
+from time import sleep, time
 import openpyxl
 from os import getcwd
 import threading
@@ -16,7 +16,7 @@ def theadGetCatalog(group: str, catalogItems: Productlinq):
     print("Парсинг группы " + group)
     try: 
         tread_browser = Driver()
-        count = 2
+        count = 0
         for catalog in catalogItems:
             if catalog.group == group:
                 print("Парсинг каталога " + catalog.type + "..")
@@ -31,7 +31,7 @@ def theadGetCatalog(group: str, catalogItems: Productlinq):
                 exel.save(docPath)
                 print(f"Записанно товаров - {count}")
     except Exception as ex:
-        print(ex)
+        print("_________________________>>>> Ахтунг - " + ex)
 
     finally:
         tread_browser.closeDriver() 
@@ -41,27 +41,34 @@ def main():
         browser = Driver()
         print("Поиск групп и каталогов..")
         catalogItems: Productlinq  = checkCatalog(driver=browser.getDriver())
+    
+    except Exception as ex:
+        print("_________________________>>>> Ахтунг в точке входа - " + ex)
+
+    finally:
         browser.closeDriver()
-        
         group:str = []
         for c in catalogItems:
             if not c.group in group:
                 group.append(c.group)
 
-        print(group)
         i = 0
+        threads = []
         for g in group:
-            if i <= 8:
-                threading.Thread(target=theadGetCatalog,args=(g,catalogItems)).start()
-            else:
-                threading.Thread(target=theadGetCatalog,args=(g,catalogItems)).start().join()
+            tr = threading.Thread(target=theadGetCatalog,args=(g,catalogItems))
+            tr.start()
+            threads.append(tr)
             print(f"Создан поток {i}")
-            sleep(15)
+            if i == 8 or i == 16 or i == 24 or i == 32:
+                print("Разгрузка потока")
+                for t in threads:
+                    t.join()
+                threads = []
             i+=1
-
-    finally:
-        pass
+            sleep(5)
 
 if __name__ == "__main__":
+    start = time()
     main()
+    print("Время: ", "%.2f" %start - time())
     

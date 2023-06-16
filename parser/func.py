@@ -14,9 +14,12 @@ def getCatalogPagesCount(pages):
     """
     Возвращает количество страниц в каталоге
     """
-    lastLinq = pages[-1].get_attribute("href").split("/")
-    lastNum = lastLinq[-1].split(".")
-    return int(lastNum[0])
+    if len(pages) == 0:
+        return 1
+    else:
+        lastLinq = pages[-1].get_attribute("href").split("/")
+        lastNum = lastLinq[-1].split(".")
+        return int(lastNum[0])
 
 def checkAnalog(driver: webdriver.Chrome, productLinq):
     """

@@ -27,12 +27,11 @@ class Driver:
         self.options.add_argument('--disable-blink-features=AutomationControlled')
         self.options.add_argument(f"user-data-dir={self.pathProfile}")
         self.options.add_argument(f"user-agent={UserAgent().random}") 
-        self.options.headless = True
+        # self.options.headless = True
         self.driver = webdriver.Chrome(
             service = Service(getcwd() + r"\parser\chromedriver.exe"),
             options = self.options
         )
-        sleep(5)
         self.driver.switch_to.new_window('tab')
         self.driver.switch_to.new_window('tab')
         self.driver.switch_to.window(self.driver.window_handles[0])
